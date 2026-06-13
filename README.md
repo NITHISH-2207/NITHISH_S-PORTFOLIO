@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # NITHISH PORTFOLIO
 
 A modern and elegant personal portfolio website built using React and Tailwind CSS.
@@ -47,3 +48,6 @@ Kongu Engineering College, Erode
 
 
 Coming Soon...
+=======
+# NITHISH-PORTFOLIO
+>>>>>>> 3a0ac18 (Initial commit)
