@@ -5,7 +5,7 @@ import { FiMail, FiPhone, FiGithub, FiLinkedin, FiCopy, FiCheck, FiSend } from '
 const CONTACT_DETAILS = [
   {
     label: 'Professional Email',
-    value: 'nithish2203@gmail.com',
+    value: 'nithishs2203@gmail.com',
     icon: <FiMail />,
     copyValue: 'nithish2203@gmail.com',
     link: 'mailto:nithish2203@gmail.com'
