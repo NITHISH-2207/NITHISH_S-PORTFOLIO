@@ -4,9 +4,9 @@ import { ThemeProvider } from './context/ThemeContext';
 import SplashScreen from './components/SplashScreen';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
-import Journey from './components/Journey';
-import Skills from './components/Skills';
 import Projects from './components/Projects';
+import Skills from './components/Skills';
+import Journey from './components/Journey';
 import CodingProfiles from './components/CodingProfiles';
 import Achievements from './components/Achievements';
 import Contact from './components/Contact';
@@ -55,18 +55,18 @@ export default function App() {
         <SplashScreen onFinish={() => setIsLoading(false)} />
       ) : (
         <div className="relative min-h-screen text-luxury-textPri bg-luxury-bg transition-colors duration-300">
-          
+
           {/* Performance Optimized Background Elements */}
           <CanvasBackground />
-          
+
           {/* Core App Layout Sections */}
           <Navbar />
-          
+
           <main className="w-full relative">
             <Hero />
-            <Journey />
             <Skills />
             <Projects />
+            <Journey />
             <CodingProfiles />
             <Achievements />
             <Contact />

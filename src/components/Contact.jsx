@@ -5,17 +5,17 @@ import { FiMail, FiPhone, FiGithub, FiLinkedin, FiCopy, FiCheck, FiSend } from '
 const CONTACT_DETAILS = [
   {
     label: 'Professional Email',
-    value: 'nithishselvaraj.dev@gmail.com',
+    value: 'nithish2203@gmail.com',
     icon: <FiMail />,
-    copyValue: 'nithishselvaraj.dev@gmail.com',
-    link: 'mailto:nithishselvaraj.dev@gmail.com'
+    copyValue: 'nithish2203@gmail.com',
+    link: 'mailto:nithish2203@gmail.com'
   },
   {
     label: 'Phone Number',
-    value: '+91 98765 43210',
+    value: '+91 9092132572',
     icon: <FiPhone />,
-    copyValue: '+919876543210',
-    link: 'tel:+919876543210'
+    copyValue: '+919092132572',
+    link: 'tel:+919092132572'
   },
   {
     label: 'GitHub Developer Profile',
@@ -55,7 +55,7 @@ export default function Contact() {
     setTimeout(() => {
       setIsSending(false);
       setSentSuccess(true);
-      
+
       // Reset form
       setFormState({ name: '', email: '', message: '' });
       setTimeout(() => setSentSuccess(false), 4000);
@@ -87,7 +87,7 @@ export default function Contact() {
       </div>
 
       <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 z-10 relative">
-        
+
         {/* Left: Credentials list */}
         <div className="lg:col-span-5 flex flex-col justify-center space-y-5">
           <div>
