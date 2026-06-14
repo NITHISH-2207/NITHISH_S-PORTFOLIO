@@ -1,0 +1,122 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: 'Fraunces', serif;
+  }
+}
+
+body {
+  @apply transition-colors duration-300;
+}
+
+/* Custom Modern Scrollbar (Clean Neutral Styling) */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F5F0E6;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #DDD6C4;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #B8962E;
+}
+
+/* Premium Soft Glassmorphism (Minimalist & Modern Warm Luxury) */
+.glass-card {
+  background: rgba(245, 240, 230, 0.85);
+  /* Card / Panel Background (#F5F0E6) */
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid #DDD6C4;
+  /* Card outer border */
+  box-shadow:
+    0 1px 3px rgba(21, 40, 73, 0.01),
+    0 8px 24px rgba(21, 40, 73, 0.03),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+/* Low-Contrast Soft Gradient Text (Navy to Gold) */
+.luxury-gradient-text {
+  color: #152849;
+  background: none;
+  -webkit-text-fill-color: #152849;
+}
+
+/* Custom Text Selections */
+::selection {
+  background-color: rgba(184, 150, 46, 0.2);
+  color: #152849;
+}
+
+/* Lenis Scroll Overrides */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overflow: clip;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+/* Custom Typing Blink Animation */
+@keyframes blink {
+  50% {
+    border-color: transparent;
+  }
+}
+
+.typing-cursor {
+  border-right: 2px solid #B8962E;
+  animation: blink 0.75s step-end infinite;
+}
+
+/* Floating Animation */
+@keyframes float {
+  0% {
+    transform: translateY(0px) rotate(0deg);
+  }
+
+  50% {
+    transform: translateY(-5px) rotate(0.5deg);
+  }
+
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
