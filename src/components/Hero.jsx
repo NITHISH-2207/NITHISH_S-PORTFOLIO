@@ -162,8 +162,8 @@ export default function Hero() {
 
             {/* Secondary Glass button */}
             <a
-              href="/assests/RESUME.pdf"
-              download="Nithish_Selvaraj_Resume.pdf"
+              href="/NITHISH_RESUME.pdf"
+              download="NITHISH_RESUME.pdf"
               className="flex items-center gap-2 px-6 py-3 rounded-lg bg-luxury-card border border-luxury-border hover:border-luxury-navy text-luxury-textPri font-bold text-xs tracking-wider uppercase transition-colors shadow-sm hover:shadow"
             >
               <FiDownload size={13} />
