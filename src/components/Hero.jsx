@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FiDownload, FiArrowRight, FiGithub, FiLinkedin, FiCompass } from 'react-icons/fi';
 import { SiLeetcode } from 'react-icons/si';
-
+import profilePic from '../assets/nithish.png';
 const TYPING_ROLES = [
   'B.Tech IT Student',
   'MERN Stack Developer',
@@ -173,53 +173,47 @@ export default function Hero() {
         </div>
 
         {/* Right Side: Clean Apple/Linear Abstract Glass Composition */}
-        <div className="lg:col-span-5 flex items-center justify-center">
+        {/* Right Side */}
+        <div className="lg:col-span-5 flex items-center justify-start pl-8 lg:pl-12">
 
           <motion.div
             initial={{ opacity: 0, scale: 0.96 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.3, duration: 0.8 }}
-            className="relative w-72 h-72 md:w-80 md:h-80 flex items-center justify-center pointer-events-none select-none"
+            className="relative flex items-center justify-center select-none"
           >
-            {/* Extremely soft blur colored spheres */}
-            <div className="absolute w-56 h-56 rounded-full bg-gradient-to-tr from-[rgba(184,155,94,0.06)] to-[rgba(36,59,83,0.04)] blur-[60px]" />
-            <div className="absolute w-40 h-40 rounded-full bg-gradient-to-bl from-luxury-card to-transparent blur-[50px] top-10" />
 
-            {/* Overlapping Glass Panels (Apple/Framer Inspired) */}
+            {/* Floating Card — Top Left */}
+
+            {/* Floating Card — Bottom Right */}
+
+            {/* Subtle markers */}
+
+
+            {/* Center: Profile Photo */}
             <motion.div
-              className="absolute top-8 left-4 w-44 py-3 px-4 glass-card rounded-xl text-left shadow-sm"
-              animate={{ y: [0, -5, 0] }}
-              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+              className="relative z-10"
+              animate={{ y: [0, -6, 0] }}
+              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
             >
-              <span className="block text-[8px] font-mono text-luxury-textSec uppercase tracking-widest font-bold">Main Focus</span>
-              <span className="block text-xs font-bold text-luxury-textPri mt-0.5">MERN Stack Engineer</span>
-              <span className="block text-[9px] text-luxury-textSec mt-1 font-medium">React, Node, Express, Mongo</span>
+              {/* Layer 1 — wide soft glow */}
+              <div className="absolute -bottom-6 -right-6 w-full h-full rounded-xl bg-luxury-navy/30 blur-3xl z-0" />
+              {/* Layer 2 — tight sharp glow */}
+              <div className="absolute -bottom-2 -right-2 w-full h-full rounded-xl bg-luxury-navy/40 blur-lg z-0" />
+
+              {/* Image — bigger, mild corners, no border */}
+              <div className="relative w-52 h-64 md:w-60 md:h-72 rounded-xl overflow-hidden z-10">
+                <img
+                  src={profilePic}
+                  alt="Nithish Selvaraj"
+                  className="w-full h-full object-cover object-top"
+                />
+                {/* Strong navy gradient — right and bottom only */}
+                <div className="absolute inset-0 bg-gradient-to-br from-transparent from-30% via-luxury-navy/30 to-luxury-navy/70 pointer-events-none" />
+              </div>
             </motion.div>
 
-            <motion.div
-              className="absolute bottom-8 right-4 w-40 py-3 px-4 glass-card rounded-xl text-left shadow-sm"
-              animate={{ y: [0, 5, 0] }}
-              transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-            >
-              <span className="block text-[8px] font-mono text-luxury-textSec uppercase tracking-widest font-bold">Education Metrics</span>
-              <span className="block text-xs font-bold text-luxury-navy mt-0.5">KEC IT Department</span>
-              <span className="block text-[9px] text-luxury-textSec mt-1 font-bold">CGPA: 8.83</span>
-            </motion.div>
-
-            {/* Central clean minimal brand element */}
-            <div className="w-16 h-16 rounded-2xl bg-luxury-bgSec border border-luxury-border flex items-center justify-center text-luxury-gold shadow relative">
-              <span className="text-xl font-heading font-bold tracking-tighter">NS</span>
-            </div>
-
-            {/* Subtle thin vector circles and markers */}
-            <div className="absolute inset-4 border border-luxury-border rounded-full" />
-            <div className="absolute inset-16 border border-dashed border-luxury-navy/10 rounded-full" />
-
-            {/* Subtle location markers */}
-            <span className="absolute bottom-1 right-10 text-[8px] font-mono text-luxury-textSec/30 font-bold">LOC_ERODE</span>
-            <span className="absolute top-1 left-10 text-[8px] font-mono text-luxury-textSec/30 font-bold">SYS_ONLINE.EXE</span>
           </motion.div>
-
         </div>
       </div>
     </section>
