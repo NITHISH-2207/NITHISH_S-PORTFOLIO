@@ -9,18 +9,18 @@ const ABOUT_HIGHLIGHTS = [
   },
   {
     emoji: '💻',
-    title: 'Full-Stack',
-    desc: 'MERN Stack Developer',
+    title: 'Developer',
+    desc: 'Web & Software Development',
   },
   {
-    emoji: '🧠',
-    title: 'Domains',
-    desc: 'ML, CV, Web, DBMS',
+    emoji: '🧩',
+    title: 'Focus',
+    desc: 'DSA, Web, Databases',
   },
   {
-    emoji: '⚡',
-    title: 'Drive',
-    desc: 'Hackathons & Problem Solving',
+    emoji: '🚀',
+    title: 'Mission',
+    desc: 'Turning Curiosity Into Code',
   },
 ];
 
@@ -56,19 +56,18 @@ export default function About() {
             transition={{ delay: 0.1, duration: 0.5 }}
             className="text-2xl md:text-4xl font-heading font-bold text-luxury-textPri mb-6"
           >
-            Who I Am
+            The Story Behind The Code
           </motion.h2>
 
           {/* Body Text */}
-          <div className="space-y-5">
+          <div className="space-y-8">
             <motion.p
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-100px' }}
               transition={{ delay: 0.2, duration: 0.5 }}
-              className="text-xs md:text-sm text-luxury-textSec leading-relaxed font-medium"
-            >
-              I'm NITHISH S, an Information Technology undergraduate at Kongu Engineering College with a strong interest in Software Development, Full-Stack Web Development, and Problem Solving.
+              className="text-sm md:text-base text-luxury-textSec leading-8 font-medium"            >
+              I'm NITHISH, an Information Technology undergraduate at Kongu Engineering College who enjoys turning ideas into practical software solutions. What started as curiosity about technology gradually became a passion for development and problem solving.
             </motion.p>
 
             <motion.p
@@ -76,9 +75,8 @@ export default function About() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-100px' }}
               transition={{ delay: 0.3, duration: 0.5 }}
-              className="text-xs md:text-sm text-luxury-textSec leading-relaxed font-medium"
-            >
-              I enjoy building practical applications using Python, Java, JavaScript, PHP, and modern web technologies. My experience spans Machine Learning, Computer Vision, Database Management, and Web Development — strengthened through coding challenges, hackathons, and hands-on project work.
+              className="text-sm md:text-base text-luxury-textSec leading-8 font-medium"            >
+              My journey has taken me through web development, databases, programming, and data structures. I enjoy building projects, exploring new technologies, and constantly improving through hands-on learning and coding challenges.
             </motion.p>
 
             <motion.p
@@ -86,9 +84,8 @@ export default function About() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-100px' }}
               transition={{ delay: 0.4, duration: 0.5 }}
-              className="text-xs md:text-sm text-luxury-textSec leading-relaxed font-medium"
-            >
-              I'm passionate about learning new technologies, solving real-world problems, and creating impactful software solutions.
+              className="text-sm md:text-base text-luxury-textSec leading-8 font-medium"            >
+              Today, I'm focused on strengthening my development skills, solving real-world problems, and growing into a software engineer who creates meaningful and impactful digital experiences.
             </motion.p>
           </div>
         </div>

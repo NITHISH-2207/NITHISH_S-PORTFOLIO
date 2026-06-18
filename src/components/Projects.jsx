@@ -142,7 +142,7 @@ export default function Projects() {
   });
 
   return (
-    <section id="projects" className="py-24 relative overflow-hidden px-6 md:px-12 bg-luxury-bgSec">
+    <section id="projects" className="pt-16 pb-24 relative overflow-hidden px-6 md:px-12 bg-luxury-bgSec">
       <div className="w-full max-w-7xl mx-auto mb-12 text-center">
         <motion.div
           initial={{ opacity: 0, y: 10 }}
