@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { FiMail, FiPhone, FiGithub, FiLinkedin, FiCopy, FiCheck, FiSend } from 'react-icons/fi';
+import emailjs from '@emailjs/browser';
 
 const CONTACT_DETAILS = [
   {
@@ -36,8 +37,8 @@ const CONTACT_DETAILS = [
 export default function Contact() {
   const [copiedIdx, setCopiedIdx] = useState(null);
   const [formState, setFormState] = useState({ name: '', email: '', message: '' });
-  const [isSending, setIsSending] = useState(false);
-  const [sentSuccess, setSentSuccess] = useState(false);
+  const [status, setStatus] = useState('idle'); // 'idle' | 'sending' | 'success' | 'error'
+  const [fieldErrors, setFieldErrors] = useState({ name: '', email: '', message: '' });
 
   const handleCopy = (text, idx) => {
     navigator.clipboard.writeText(text);
@@ -47,19 +48,60 @@ export default function Contact() {
 
   const handleSend = (e) => {
     e.preventDefault();
-    if (!formState.name || !formState.email || !formState.message) return;
+    
+    // Reset status and errors
+    setStatus('idle');
+    const newErrors = { name: '', email: '', message: '' };
+    let hasError = false;
 
-    setIsSending(true);
+    // Basic validation
+    if (!formState.name.trim()) {
+      newErrors.name = 'Please enter your name.';
+      hasError = true;
+    }
 
-    // Mock send delay
-    setTimeout(() => {
-      setIsSending(false);
-      setSentSuccess(true);
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!formState.email.trim()) {
+      newErrors.email = 'Please enter your email.';
+      hasError = true;
+    } else if (!emailRegex.test(formState.email.trim())) {
+      newErrors.email = 'Please enter a valid email address.';
+      hasError = true;
+    }
 
-      // Reset form
+    if (!formState.message.trim()) {
+      newErrors.message = 'Please enter a message.';
+      hasError = true;
+    }
+
+    if (hasError) {
+      setFieldErrors(newErrors);
+      return;
+    }
+
+    setFieldErrors({ name: '', email: '', message: '' });
+    setStatus('sending');
+
+    emailjs.send(
+      process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || '',
+      process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || '',
+      {
+        name: formState.name,
+        email: formState.email,
+        message: formState.message
+      },
+      process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || ''
+    )
+    .then(() => {
+      setStatus('success');
       setFormState({ name: '', email: '', message: '' });
-      setTimeout(() => setSentSuccess(false), 4000);
-    }, 1000);
+      // Clear success state after 5 seconds to allow sending another message
+      setTimeout(() => setStatus('idle'), 5000);
+    })
+    .catch((err) => {
+      console.error('EmailJS Send Error:', err);
+      setStatus('error');
+    });
   };
 
   return (
@@ -158,7 +200,7 @@ export default function Contact() {
           >
             <form onSubmit={handleSend} className="space-y-4">
               {/* Name */}
-              <div className="space-y-1.5">
+              <div className="space-y-1.5 text-left">
                 <label className="text-[9px] font-mono tracking-wider uppercase text-luxury-textSec">
                   Your Identifier Name
                 </label>
@@ -170,10 +212,13 @@ export default function Contact() {
                   onChange={(e) => setFormState({ ...formState, name: e.target.value })}
                   className="w-full px-4 py-3 rounded-lg bg-luxury-bg border border-luxury-border text-xs text-luxury-textPri focus:outline-none focus:border-luxury-navy/40 transition-colors font-medium placeholder-luxury-textSec/30"
                 />
+                {fieldErrors.name && (
+                  <p className="text-red-600 text-[10px] font-mono mt-1 font-semibold">{fieldErrors.name}</p>
+                )}
               </div>
 
               {/* Email */}
-              <div className="space-y-1.5">
+              <div className="space-y-1.5 text-left">
                 <label className="text-[9px] font-mono tracking-wider uppercase text-luxury-textSec">
                   Your Target Email
                 </label>
@@ -185,10 +230,13 @@ export default function Contact() {
                   onChange={(e) => setFormState({ ...formState, email: e.target.value })}
                   className="w-full px-4 py-3 rounded-lg bg-luxury-bg border border-luxury-border text-xs text-luxury-textPri focus:outline-none focus:border-luxury-navy/40 transition-colors font-medium placeholder-luxury-textSec/30"
                 />
+                {fieldErrors.email && (
+                  <p className="text-red-600 text-[10px] font-mono mt-1 font-semibold">{fieldErrors.email}</p>
+                )}
               </div>
 
               {/* Message */}
-              <div className="space-y-1.5">
+              <div className="space-y-1.5 text-left">
                 <label className="text-[9px] font-mono tracking-wider uppercase text-luxury-textSec">
                   Transmitted Payload (Message)
                 </label>
@@ -200,47 +248,38 @@ export default function Contact() {
                   onChange={(e) => setFormState({ ...formState, message: e.target.value })}
                   className="w-full px-4 py-3 rounded-lg bg-luxury-bg border border-luxury-border text-xs text-luxury-textPri focus:outline-none focus:border-luxury-navy/40 transition-colors font-medium placeholder-luxury-textSec/30 resize-none"
                 />
+                {fieldErrors.message && (
+                  <p className="text-red-600 text-[10px] font-mono mt-1 font-semibold">{fieldErrors.message}</p>
+                )}
               </div>
 
               {/* Submit Button */}
               <button
                 type="submit"
-                disabled={isSending || sentSuccess}
+                disabled={status === 'sending'}
                 className="w-full flex items-center justify-center gap-2 py-3 rounded-lg bg-luxury-navy hover:bg-luxury-gold text-luxury-bg font-bold text-xs tracking-wider uppercase transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer shadow-sm"
               >
-                {isSending ? (
+                {status === 'sending' ? (
                   <div className="w-3.5 h-3.5 border border-t-luxury-bg border-transparent rounded-full animate-spin" />
-                ) : sentSuccess ? (
+                ) : status === 'success' ? (
                   <FiCheck className="text-xs font-bold" />
                 ) : (
                   <FiSend className="text-xs" />
                 )}
-                <span>{sentSuccess ? 'Message Transmitted' : isSending ? 'Transmitting...' : 'Send Secure Message'}</span>
+                <span>{status === 'success' ? 'Message Transmitted' : status === 'sending' ? 'Sending...' : 'Send Secure Message'}</span>
               </button>
-            </form>
 
-            {/* Success screen overlay */}
-            <AnimatePresence>
-              {sentSuccess && (
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  className="absolute inset-0 bg-luxury-bg/95 backdrop-blur-md flex flex-col items-center justify-center text-center p-6"
-                >
-                  <div className="w-12 h-12 rounded-full border border-luxury-gold flex items-center justify-center text-luxury-gold mb-3 text-lg">
-                    <FiCheck />
-                  </div>
-                  <h3 className="text-base font-heading font-bold text-luxury-textPri">
-                    Transmission Acknowledged
-                  </h3>
-                  <p className="text-xs text-luxury-textSec max-w-xs mt-2 leading-relaxed">
-                    Thank you. Your message package has been successfully mock-transmitted. Nithish will receive the telemetry soon.
-                  </p>
-                </motion.div>
+              {status === 'success' && (
+                <p className="text-green-600 text-xs font-semibold text-center mt-3 font-mono">
+                  Message sent successfully.
+                </p>
               )}
-            </AnimatePresence>
-
+              {status === 'error' && (
+                <p className="text-red-600 text-xs font-semibold text-center mt-3 font-mono">
+                  Something went wrong. Please try again or email me directly.
+                </p>
+              )}
+            </form>
           </motion.div>
         </div>
 
