@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { FaJava, FaCode, FaReact, FaServer, FaDatabase, FaGithub, FaBrain, FaTools } from 'react-icons/fa';
 
@@ -15,23 +15,24 @@ const SKILLS_DATA = [
 
 export default function Skills() {
   const [isVisible, setIsVisible] = useState(false);
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    }
+    return false;
+  });
   const sectionRef = useRef(null);
 
   useEffect(() => {
     // Check prefers-reduced-motion setting
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-    setPrefersReducedMotion(mediaQuery.matches);
     const motionListener = (e) => setPrefersReducedMotion(e.matches);
     mediaQuery.addEventListener('change', motionListener);
 
     // Setup intersection observer
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.disconnect();
-        }
+        setIsVisible(entry.isIntersecting);
       },
       { threshold: 0.1 }
     );
@@ -55,9 +56,9 @@ export default function Skills() {
         }
         @media (prefers-reduced-motion: no-preference) {
           .skill-tile:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 24px rgba(27, 42, 74, 0.10) !important;
-            border-left: 2px solid #B8962E !important;
+            transform: translateY(-8px) scale(1.015);
+            box-shadow: 0 14px 32px rgba(27, 42, 74, 0.14);
+            border-left: 3px solid #B8962E !important;
           }
         }
         @media (prefers-reduced-motion: reduce) {
@@ -69,19 +70,19 @@ export default function Skills() {
 
       <div className="w-full max-w-7xl mx-auto mb-16 text-center z-10">
         <motion.div
-          initial={{ opacity: 0, y: 10 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.5 }}
+          viewport={{ once: false, amount: 0.25 }}
+          transition={{ duration: 0.6 }}
           className="text-xs font-mono uppercase tracking-[0.3em] text-luxury-gold mb-3 font-bold"
         >
           My Toolkit
         </motion.div>
         <motion.h2
-          initial={{ opacity: 0, y: 15 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-100px' }}
-          transition={{ delay: 0.1, duration: 0.5 }}
+          viewport={{ once: false, amount: 0.25 }}
+          transition={{ delay: 0.1, duration: 0.6 }}
           className="text-2xl md:text-4xl font-heading font-bold text-luxury-textPri"
         >
           Skills & <span className="text-luxury-navy">Expertise</span>
@@ -110,7 +111,7 @@ export default function Skills() {
                 className="skill-tile glass-card rounded-xl py-7 px-6 border border-luxury-border bg-luxury-card/90 shadow-sm flex items-center gap-4 text-left cursor-default w-full h-full"
               >
                 {/* Icon */}
-                <div className="text-lg p-2.5 bg-luxury-bgSec rounded-lg border border-luxury-border flex items-center justify-center text-luxury-textPri shrink-0">
+                <div className="text-lg p-2.5 bg-luxury-bgSec rounded-lg border border-luxury-border flex items-center justify-center text-luxury-textPri shrink-0 transition-all duration-300 group-hover:scale-110">
                   {skill.icon}
                 </div>
                 {/* Title & Desc */}

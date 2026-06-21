@@ -3,12 +3,11 @@ import { motion } from 'framer-motion';
 import { FiDownload, FiArrowRight, FiGithub, FiLinkedin, FiCompass } from 'react-icons/fi';
 import { SiLeetcode } from 'react-icons/si';
 import profilePic from '../assets/nithish.png';
-const TYPING_ROLES = [
-  'B.Tech IT Student',
-  'MERN Stack Developer',
+const ROTATING_ROLES = [
   'Problem Solver',
+  'Full Stack Developer',
+  'Software Developer',
   'Tech Explorer',
-  'Future Software Engineer',
 ];
 
 const SOCIAL_LINKS = [
@@ -20,45 +19,48 @@ const SOCIAL_LINKS = [
 
 export default function Hero() {
   const [currentRoleIndex, setCurrentRoleIndex] = useState(0);
-  const [currentText, setCurrentText] = useState('');
-  const [isDeleting, setIsDeleting] = useState(false);
-  const [typingSpeed, setTypingSpeed] = useState(120);
+  const [isFadingOut, setIsFadingOut] = useState(false);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    }
+    return false;
+  });
 
   useEffect(() => {
-    const activeRole = TYPING_ROLES[currentRoleIndex];
-    let timer;
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const listener = (e) => setPrefersReducedMotion(e.matches);
+    mediaQuery.addEventListener('change', listener);
+    return () => mediaQuery.removeEventListener('change', listener);
+  }, []);
 
-    if (isDeleting) {
-      timer = setTimeout(() => {
-        setCurrentText((prev) => prev.slice(0, -1));
-        setTypingSpeed(60);
-      }, typingSpeed);
-    } else {
-      timer = setTimeout(() => {
-        setCurrentText((prev) => activeRole.slice(0, prev.length + 1));
-        setTypingSpeed(120);
-      }, typingSpeed);
+  useEffect(() => {
+    if (prefersReducedMotion) {
+      setCurrentRoleIndex(0);
+      setIsFadingOut(false);
+      return;
     }
 
-    if (!isDeleting && currentText === activeRole) {
-      timer = setTimeout(() => setIsDeleting(true), 2500);
-    } else if (isDeleting && currentText === '') {
-      setIsDeleting(false);
-      setCurrentRoleIndex((prev) => (prev + 1) % TYPING_ROLES.length);
-    }
+    const interval = setInterval(() => {
+      setIsFadingOut(true);
+      setTimeout(() => {
+        setCurrentRoleIndex((prev) => (prev + 1) % ROTATING_ROLES.length);
+        setIsFadingOut(false);
+      }, 300);
+    }, 2500);
 
-    return () => clearTimeout(timer);
-  }, [currentText, isDeleting, currentRoleIndex, typingSpeed]);
+    return () => clearInterval(interval);
+  }, [prefersReducedMotion]);
 
-  const scrollToJourney = () => {
-    const el = document.getElementById('journey');
-    if (el) {
-      const offset = 80;
-      const elementPosition = el.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - offset;
-      window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
-    }
-  };
+  const scrollToProjects = () => {
+  const el = document.getElementById('projects');
+  if (el) {
+    const offset = 80;
+    const elementPosition = el.getBoundingClientRect().top;
+    const offsetPosition = elementPosition + window.pageYOffset - offset;
+    window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+  }
+};
 
   return (
     <section
@@ -70,17 +72,20 @@ export default function Hero() {
         {/* Left Side: Typography, Social Cards, Buttons */}
         <div className="lg:col-span-7 flex flex-col justify-center text-left">
 
-          {/* Subtle Tag */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-luxury-bgSec border border-luxury-border w-fit mb-5"
-          >
-            <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-luxury-gold font-bold">
-              Engineering Portfolio
-            </span>
-          </motion.div>
+          {/* Subtle Tags */}
+          <div className="flex flex-col gap-2 mb-5">
+
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.05, duration: 0.5 }}
+              className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-luxury-bgSec border border-luxury-border w-fit"
+            >
+              <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-luxury-gold font-bold">
+                Open to Internships
+              </span>
+            </motion.div>
+          </div>
 
           {/* Headline Name */}
           <motion.h1
@@ -92,7 +97,7 @@ export default function Hero() {
             <span className="luxury-gradient-text">NITHISH S</span>
           </motion.h1>
 
-          {/* Typing Roles */}
+          {/* Rotating Roles */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -100,7 +105,13 @@ export default function Hero() {
             className="h-8 mt-2 flex items-center"
           >
             <span className="text-base md:text-lg font-mono text-luxury-mono tracking-wide">
-              I am a <span className="text-luxury-gold font-bold typing-cursor pr-1">{currentText}</span>
+              I am a{' '}
+              <span
+                className={`text-luxury-gold font-bold transition-opacity duration-300 ${prefersReducedMotion ? 'opacity-100' : (isFadingOut ? 'opacity-0' : 'opacity-100')
+                  }`}
+              >
+                {ROTATING_ROLES[currentRoleIndex]}
+              </span>
             </span>
           </motion.div>
 
@@ -120,8 +131,20 @@ export default function Hero() {
             transition={{ delay: 0.4, duration: 0.6 }}
             className="text-xs md:text-sm text-luxury-textSec max-w-xl mt-3.5 leading-relaxed font-medium"
           >
-            Engineering elegant software solutions and exploring modern web architectures. Pursuing B.Tech Information Technology at Kongu Engineering College. Focused on building high-performance, developer-friendly platforms with clean codes.
+            Building software solutions through problem solving, full-stack development, and continuous learning. Pursuing B.Tech Information Technology at Kongu Engineering College with a strong interest in creating impactful and user-focused applications.
           </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.42, duration: 0.6 }}
+            className="mt-4"
+          >
+            <p className="text-sm text-luxury-textSec font-medium">
+              340+ Problems Solved • 8.39 CGPA • 2nd Place Project Expo • 3+ Hackathons
+            </p>
+          </motion.div>
+
 
           {/* Apple/Framer Inspired Rounded Square Glass Social Buttons */}
           <motion.div
@@ -153,10 +176,10 @@ export default function Hero() {
           >
             {/* Primary Navy button */}
             <button
-              onClick={scrollToJourney}
+              onClick={scrollToProjects}
               className="flex items-center gap-2 px-6 py-3 rounded-lg bg-luxury-navy hover:bg-luxury-gold text-luxury-bg font-bold text-xs tracking-wider uppercase transition-colors shadow-sm hover:shadow cursor-pointer"
             >
-              <span>Explore My Journey</span>
+              <span>Explore Portfolio</span>
               <FiArrowRight size={13} />
             </button>
 
@@ -167,9 +190,11 @@ export default function Hero() {
               className="flex items-center gap-2 px-6 py-3 rounded-lg bg-luxury-card border border-luxury-border hover:border-luxury-navy text-luxury-textPri font-bold text-xs tracking-wider uppercase transition-colors shadow-sm hover:shadow"
             >
               <FiDownload size={13} />
-              <span>Download Resume</span>
+              <span>Download CV</span>
             </a>
           </motion.div>
+
+
         </div>
 
         {/* Right Side: Clean Apple/Linear Abstract Glass Composition */}

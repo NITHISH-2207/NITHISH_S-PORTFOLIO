@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiGithub, FiExternalLink, FiSearch, FiCode, FiAlertCircle } from 'react-icons/fi';
 
@@ -29,7 +29,7 @@ const FALLBACK_PROJECTS = [
     html_url: 'https://github.com/NITHISH-2207/Disease-Outbreak-Early-Warning-System',
     tech_tags: ['Python', 'Streamlit', 'Pandas', 'Data Analytics', 'Matplotlib'],
     featured: true,
-    demo_url: null
+    demo_url: 'https://diseaseoutbreakearly.streamlit.app/'
   },
   {
     name: 'cpu-scheduler',
@@ -38,7 +38,7 @@ const FALLBACK_PROJECTS = [
     html_url: 'https://github.com/NITHISH-2207/cpu-scheduler',
     tech_tags: ['HTML5', 'CSS3', 'JavaScript', 'Algorithms', 'CSS Easing'],
     featured: false,
-    demo_url: 'https://nithish-2207.github.io/cpu-scheduler/'
+    demo_url: 'https://cpu-scheduler-nithish.surge.sh/'
   },
   {
     name: 'SENTIMENT_ANALYSIS_APP',
@@ -47,7 +47,7 @@ const FALLBACK_PROJECTS = [
     html_url: 'https://github.com/NITHISH-2207/SENTIMENT_ANALYSIS_APP',
     tech_tags: ['Python', 'Streamlit', 'NLTK', 'PDF Parsing', 'Machine Learning'],
     featured: false,
-    demo_url: null
+    demo_url: 'https://sentimentanalysisapp-a7op8itprwacdqeuww2vtn.streamlit.app/'
   },
   {
     name: 'Warshall-s-algorithm-for-transitive-closure',
@@ -56,7 +56,7 @@ const FALLBACK_PROJECTS = [
     html_url: 'https://github.com/NITHISH-2207/Warshall-s-algorithm-for-transitive-closure',
     tech_tags: ['JavaScript', 'HTML5 Canvas', 'CSS Grid', 'Graph Theory'],
     featured: false,
-    demo_url: 'https://nithish-2207.github.io/Warshall-s-algorithm-for-transitive-closure/'
+    demo_url: 'https://warshall.netlify.app/'
   },
   {
     name: 'Learning-Resources-Finder-',
@@ -66,6 +66,15 @@ const FALLBACK_PROJECTS = [
     tech_tags: ['PHP', 'XAMPP', 'MySQL', 'Web Dev', 'Search Algorithms'],
     featured: false,
     demo_url: null
+  },
+  {
+    name: 'ATM-SYSTEM',
+    description: 'ATM System simulation representing account balance check, secure PIN verification, cash deposits, and withdrawals.',
+    language: 'JavaScript',
+    html_url: 'https://github.com/NITHISH-2207/ATM-SYSTEM',
+    tech_tags: ['JavaScript', 'HTML5', 'CSS3'],
+    featured: false,
+    demo_url: 'https://atm-system-n1av.vercel.app/'
   }
 ];
 
@@ -75,6 +84,20 @@ export default function Projects() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedFilter, setSelectedFilter] = useState('All');
   const [apiLimitExceeded, setApiLimitExceeded] = useState(false);
+
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    }
+    return false;
+  });
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const listener = (e) => setPrefersReducedMotion(e.matches);
+    mediaQuery.addEventListener('change', listener);
+    return () => mediaQuery.removeEventListener('change', listener);
+  }, []);
 
   useEffect(() => {
     fetch('https://api.github.com/users/NITHISH-2207/repos?sort=updated')
@@ -141,23 +164,62 @@ export default function Projects() {
     return matchesSearch && project.language === selectedFilter;
   });
 
+  const featuredTitlesOrdered = [
+    'anti spoofing system',
+    'agroguide',
+    'disease outbreak early warning system',
+    'sentiment analysis app'
+  ];
+
+  const getNormalizedName = (name) => {
+    return name.toLowerCase().replace(/[-_]/g, ' ').replace(/\s+/g, ' ').trim();
+  };
+
+  // Filtered featured projects in the requested exact order
+  const featuredProjects = [];
+  featuredTitlesOrdered.forEach((title) => {
+    const found = filteredProjects.find(
+      (p) => getNormalizedName(p.name) === title
+    );
+    if (found) {
+      featuredProjects.push(found);
+    }
+  });
+
+  // All other projects (remaining, preserving their relative order, excluding duplicates)
+  const allProjects = filteredProjects.filter(
+    (p) => !featuredTitlesOrdered.includes(getNormalizedName(p.name))
+  );
+
+  const orderedProjects = [...featuredProjects, ...allProjects];
+
   return (
     <section id="projects" className="pt-16 pb-24 relative overflow-hidden px-6 md:px-12 bg-luxury-bgSec">
+      <style>{`
+        .project-card-custom {
+          transition: all 220ms ease !important;
+        }
+        .project-card-custom:hover {
+          transform: translateY(-4px) !important;
+          box-shadow: 0 6px 20px rgba(27, 42, 74, 0.10) !important;
+        }
+      `}</style>
+
       <div className="w-full max-w-7xl mx-auto mb-12 text-center">
         <motion.div
-          initial={{ opacity: 0, y: 10 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.5 }}
+          viewport={{ once: false, amount: 0.25 }}
+          transition={{ duration: 0.6 }}
           className="text-xs font-mono uppercase tracking-[0.3em] text-luxury-gold mb-3 font-bold"
         >
           My Creations
         </motion.div>
         <motion.h2
-          initial={{ opacity: 0, y: 15 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-100px' }}
-          transition={{ delay: 0.1, duration: 0.5 }}
+          viewport={{ once: false, amount: 0.25 }}
+          transition={{ delay: 0.1, duration: 0.6 }}
           className="text-2xl md:text-4xl font-heading font-bold text-luxury-textPri"
         >
           Featured <span className="text-luxury-navy">Projects</span>
@@ -219,90 +281,86 @@ export default function Projects() {
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
           >
             <AnimatePresence mode="popLayout">
-              {filteredProjects.map((project) => (
-                <motion.div
-                  key={project.id}
-                  layout
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.95 }}
-                  transition={{ duration: 0.4 }}
-                  className="glass-card rounded-xl p-5 border border-luxury-border flex flex-col justify-between group h-full relative hover:border-luxury-gold/50 hover:-translate-y-1 transition-all duration-300 shadow-sm bg-luxury-card/90"
-                >
-                  {/* Featured Tag */}
-                  {project.featured && (
-                    <div className="absolute top-4 right-4 border border-luxury-gold/50 text-luxury-gold text-[8px] font-bold tracking-widest uppercase px-2 py-0.5 rounded">
-                      Featured
+              {orderedProjects.map((project, index) => {
+                const isFeatured = featuredTitlesOrdered.includes(getNormalizedName(project.name));
+                return (
+                  <motion.div
+                    key={project.id}
+                    layout
+                    initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+                    whileInView={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
+                    exit={prefersReducedMotion ? {} : { opacity: 0, scale: 0.95 }}
+                    viewport={{ once: false, amount: 0.25 }}
+                    transition={prefersReducedMotion ? {} : { duration: 0.6, ease: 'easeOut', delay: index * 0.08 }}
+                    className={`project-card-custom glass-card rounded-xl p-5 flex flex-col justify-between group h-full relative shadow-sm bg-luxury-card/90 ${
+                      isFeatured ? 'border border-luxury-gold/50' : 'border border-luxury-border hover:border-luxury-gold/50'
+                    }`}
+                  >
+                    {/* Featured Tag */}
+                    {(project.featured || isFeatured) && (
+                      <div className="absolute top-4 right-4 border border-luxury-gold/50 text-luxury-gold text-[8px] font-bold tracking-widest uppercase px-2 py-0.5 rounded">
+                        Featured
+                      </div>
+                    )}
+
+                    <div>
+                      {/* Icon */}
+                      <div className="text-luxury-navy text-xl mb-4 p-2 bg-luxury-bg rounded-lg w-fit border border-luxury-border flex items-center justify-center">
+                        <FiCode />
+                      </div>
+
+                      <h3 className="text-base font-bold text-luxury-textPri group-hover:text-luxury-navy transition-colors duration-300 capitalize">
+                        {project.name}
+                      </h3>
+
+                      <p className="text-xs text-luxury-textSec mt-2.5 leading-relaxed line-clamp-4 min-h-[64px] font-medium">
+                        {project.description}
+                      </p>
+
+                      {/* Tech Badges */}
+                      <div className="flex flex-wrap gap-1 mt-4">
+                        {project.tech_tags.map((tag) => (
+                          <span
+                            key={tag}
+                            className="px-2 py-0.5 rounded bg-luxury-bg text-[8px] font-mono text-luxury-textSec font-bold uppercase tracking-wider border border-luxury-border"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
                     </div>
-                  )}
 
-                  <div>
-                    {/* Icon */}
-                    <div className="text-luxury-navy text-xl mb-4 p-2 bg-luxury-bg rounded-lg w-fit border border-luxury-border flex items-center justify-center">
-                      <FiCode />
-                    </div>
-
-                    <h3 className="text-base font-bold text-luxury-textPri group-hover:text-luxury-navy transition-colors duration-300 capitalize">
-                      {project.name}
-                    </h3>
-
-                    <p className="text-xs text-luxury-textSec mt-2.5 leading-relaxed line-clamp-4 min-h-[64px] font-medium">
-                      {project.description}
-                    </p>
-
-                    {/* Tech Badges */}
-                    <div className="flex flex-wrap gap-1 mt-4">
-                      {project.tech_tags.map((tag) => (
-                        <span
-                          key={tag}
-                          className="px-2 py-0.5 rounded bg-luxury-bg text-[8px] font-mono text-luxury-textSec font-bold uppercase tracking-wider border border-luxury-border"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Actions Links */}
-                  <div className="flex items-center gap-3 mt-5 border-t border-luxury-border pt-4">
-                    {/* Code (Glassmorphism secondary style) */}
-                    <a
-                      href={project.html_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex-1 flex items-center justify-center gap-1.5 py-1.5 rounded-lg bg-luxury-bg hover:bg-luxury-bgSec text-luxury-textPri border border-luxury-border text-[10px] font-bold tracking-wider uppercase transition-colors shadow-sm"
-                    >
-                      <FiGithub size={12} />
-                      <span>Code</span>
-                    </a>
-
-                    {/* Demo (Navy filled primary style) */}
-                    {project.demo_url ? (
+                    {/* Actions Links */}
+                    <div className={`flex items-center mt-5 border-t border-luxury-border pt-4 ${project.demo_url ? 'gap-3' : 'justify-center'}`}>
                       <a
-                        href={project.demo_url}
+                        href={project.html_url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex-1 flex items-center justify-center gap-1.5 py-1.5 rounded-lg bg-luxury-navy text-luxury-bg hover:bg-luxury-gold text-[10px] font-bold tracking-wider uppercase transition-colors shadow-sm"
+                        className={`${project.demo_url ? 'flex-1' : 'w-full max-w-[180px]'} flex items-center justify-center gap-1.5 py-1.5 rounded-lg bg-luxury-bg hover:bg-luxury-bgSec text-luxury-textPri border border-luxury-border text-[10px] font-bold tracking-wider uppercase transition-colors shadow-sm`}
                       >
-                        <FiExternalLink size={12} />
-                        <span>Demo</span>
+                        <FiGithub size={12} />
+                        <span>Code</span>
                       </a>
-                    ) : (
-                      <button
-                        disabled
-                        className="flex-1 py-1.5 rounded-lg bg-luxury-bgSec/50 border border-dashed border-luxury-border text-luxury-textSec/30 text-[10px] font-semibold tracking-wider uppercase cursor-not-allowed"
-                      >
-                        Coming Soon
-                      </button>
-                    )}
-                  </div>
-                </motion.div>
-              ))}
+                      {project.demo_url && (
+                        <a
+                          href={project.demo_url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex-1 flex items-center justify-center gap-1.5 py-1.5 rounded-lg bg-luxury-navy text-luxury-bg hover:bg-luxury-gold text-[10px] font-bold tracking-wider uppercase transition-colors shadow-sm"
+                        >
+                          <FiExternalLink size={12} />
+                          <span>Demo</span>
+                        </a>
+                      )}
+                    </div>
+                  </motion.div>
+                );
+              })}
             </AnimatePresence>
           </motion.div>
         )}
 
-        {!loading && filteredProjects.length === 0 && (
+        {!loading && orderedProjects.length === 0 && (
           <div className="flex flex-col items-center justify-center py-20 text-center gap-2">
             <FiSearch className="text-luxury-textSec/30 text-3xl" />
             <h4 className="text-luxury-textPri font-bold text-sm">

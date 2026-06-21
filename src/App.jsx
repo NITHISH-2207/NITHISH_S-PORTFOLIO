@@ -68,9 +68,9 @@ export default function App() {
             <About />
             <Skills />
             <Projects />
+            <Achievements />
             <Journey />
             <CodingProfiles />
-            <Achievements />
             <Contact />
           </main>
 

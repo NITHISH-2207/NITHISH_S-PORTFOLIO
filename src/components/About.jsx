@@ -1,4 +1,3 @@
-import React from 'react';
 import { motion } from 'framer-motion';
 
 const ABOUT_HIGHLIGHTS = [
@@ -37,10 +36,10 @@ export default function About() {
 
           {/* Eyebrow Label */}
           <motion.div
-            initial={{ opacity: 0, y: 10 }}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-100px' }}
-            transition={{ duration: 0.5 }}
+            viewport={{ once: false, amount: 0.25 }}
+            transition={{ duration: 0.6 }}
             className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-luxury-bgSec border border-luxury-border w-fit mb-5"
           >
             <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-luxury-gold font-bold">
@@ -50,10 +49,10 @@ export default function About() {
 
           {/* Heading */}
           <motion.h2
-            initial={{ opacity: 0, y: 15 }}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-100px' }}
-            transition={{ delay: 0.1, duration: 0.5 }}
+            viewport={{ once: false, amount: 0.25 }}
+            transition={{ delay: 0.1, duration: 0.6 }}
             className="text-2xl md:text-4xl font-heading font-bold text-luxury-textPri mb-6"
           >
             The Story Behind The Code
@@ -62,29 +61,32 @@ export default function About() {
           {/* Body Text */}
           <div className="space-y-8">
             <motion.p
-              initial={{ opacity: 0, y: 10 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-100px' }}
-              transition={{ delay: 0.2, duration: 0.5 }}
-              className="text-sm md:text-base text-luxury-textSec leading-8 font-medium"            >
+              viewport={{ once: false, amount: 0.25 }}
+              transition={{ delay: 0.2, duration: 0.6 }}
+              className="text-sm md:text-base text-luxury-textSec leading-8 font-medium"
+            >
               I'm NITHISH, an Information Technology undergraduate at Kongu Engineering College who enjoys turning ideas into practical software solutions. What started as curiosity about technology gradually became a passion for development and problem solving.
             </motion.p>
 
             <motion.p
-              initial={{ opacity: 0, y: 10 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-100px' }}
-              transition={{ delay: 0.3, duration: 0.5 }}
-              className="text-sm md:text-base text-luxury-textSec leading-8 font-medium"            >
+              viewport={{ once: false, amount: 0.25 }}
+              transition={{ delay: 0.3, duration: 0.6 }}
+              className="text-sm md:text-base text-luxury-textSec leading-8 font-medium"
+            >
               My journey has taken me through web development, databases, programming, and data structures. I enjoy building projects, exploring new technologies, and constantly improving through hands-on learning and coding challenges.
             </motion.p>
 
             <motion.p
-              initial={{ opacity: 0, y: 10 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-100px' }}
-              transition={{ delay: 0.4, duration: 0.5 }}
-              className="text-sm md:text-base text-luxury-textSec leading-8 font-medium"            >
+              viewport={{ once: false, amount: 0.25 }}
+              transition={{ delay: 0.4, duration: 0.6 }}
+              className="text-sm md:text-base text-luxury-textSec leading-8 font-medium"
+            >
               Today, I'm focused on strengthening my development skills, solving real-world problems, and growing into a software engineer who creates meaningful and impactful digital experiences.
             </motion.p>
           </div>
@@ -95,10 +97,10 @@ export default function About() {
           {ABOUT_HIGHLIGHTS.map((highlight, idx) => (
             <motion.div
               key={idx}
-              initial={{ opacity: 0, y: 10 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-100px' }}
-              transition={{ delay: idx * 0.1, duration: 0.5 }}
+              viewport={{ once: false, amount: 0.25 }}
+              transition={{ delay: idx * 0.1, duration: 0.6 }}
               className="p-4 rounded-xl bg-luxury-navy/5 hover:bg-luxury-navy/[0.08] transition-all duration-300 flex items-center gap-4 text-left group"
             >
               <div className="text-2xl select-none flex-shrink-0 bg-luxury-bgSec/40 w-12 h-12 rounded-lg flex items-center justify-center">

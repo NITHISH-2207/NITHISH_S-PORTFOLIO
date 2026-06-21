@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiMail, FiPhone, FiGithub, FiLinkedin, FiCopy, FiCheck, FiSend } from 'react-icons/fi';
 
@@ -66,19 +66,19 @@ export default function Contact() {
     <section id="contact" className="py-24 relative overflow-hidden px-6 md:px-12 bg-luxury-bg">
       <div className="w-full max-w-7xl mx-auto mb-16 text-center z-10">
         <motion.div
-          initial={{ opacity: 0, y: 10 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.5 }}
+          viewport={{ once: false, amount: 0.25 }}
+          transition={{ duration: 0.6 }}
           className="text-xs font-mono uppercase tracking-[0.3em] text-luxury-gold mb-3 font-bold"
         >
           Get In Touch
         </motion.div>
         <motion.h2
-          initial={{ opacity: 0, y: 15 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-100px' }}
-          transition={{ delay: 0.1, duration: 0.5 }}
+          viewport={{ once: false, amount: 0.25 }}
+          transition={{ delay: 0.1, duration: 0.6 }}
           className="text-2xl md:text-4xl font-heading font-bold text-luxury-textPri"
         >
           Secure Connection <span className="text-luxury-navy">Line</span>
@@ -103,10 +103,10 @@ export default function Contact() {
             {CONTACT_DETAILS.map((detail, idx) => (
               <motion.div
                 key={idx}
-                initial={{ opacity: 0, x: -15 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, margin: '-100px' }}
-                transition={{ delay: idx * 0.05, duration: 0.4 }}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: false, amount: 0.25 }}
+                transition={{ delay: idx * 0.05, duration: 0.6 }}
                 className="glass-card rounded-xl p-4 border border-luxury-border flex items-center justify-between group hover:border-luxury-gold/50 transition-all duration-300 shadow-sm bg-luxury-card/90"
               >
                 <div className="flex items-center gap-3">
@@ -150,10 +150,10 @@ export default function Contact() {
         {/* Right: Message Form */}
         <div className="lg:col-span-7">
           <motion.div
-            initial={{ opacity: 0, y: 15 }}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-100px' }}
-            transition={{ delay: 0.1, duration: 0.5 }}
+            viewport={{ once: false, amount: 0.25 }}
+            transition={{ delay: 0.1, duration: 0.6 }}
             className="glass-card rounded-xl p-6 md:p-8 border border-luxury-border relative overflow-hidden shadow-sm bg-luxury-card/90"
           >
             <form onSubmit={handleSend} className="space-y-4">

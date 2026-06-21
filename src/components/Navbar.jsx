@@ -7,9 +7,9 @@ const NAV_ITEMS = [
   { id: 'about', label: 'About' },
   { id: 'skills', label: 'Skills' },
   { id: 'projects', label: 'Projects' },
+  { id: 'achievements', label: 'Awards' },
   { id: 'journey', label: 'Journey' },
   { id: 'coding-profiles', label: 'Profiles' },
-  { id: 'achievements', label: 'Awards' },
   { id: 'contact', label: 'Contact' },
 ];
 
@@ -80,7 +80,7 @@ export default function Navbar() {
         : 'bg-transparent py-5 border-transparent'
         }`}
     >
-      <div className="flex items-center justify-between px-6 md:px-8">
+      <div className="flex items-center justify-between pl-6 md:pl-8 lg:pl-10 pr-6 md:pr-8 lg:pr-16">
         {/* Logo */}
         <button
           onClick={() => scrollToSection('home')}
@@ -111,17 +111,7 @@ export default function Navbar() {
         </div>
 
         {/* Actions */}
-        <div className="flex items-center gap-3">
-          {/* Download Resume Link */}
-          <a
-            href="/NITHISH_RESUME.pdf"
-            download="NITHISH_RESUME.pdf"
-            className="hidden md:flex items-center gap-2 px-4 py-2 rounded-lg bg-luxury-navy hover:bg-luxury-gold text-luxury-bg font-bold text-xs tracking-wider uppercase transition-all shadow-sm"
-          >
-            <FiDownload size={13} />
-            <span>Resume</span>
-          </a>
-
+        <div className="flex items-center gap-3 lg:hidden">
           {/* Hamburger Mobile Menu Toggle */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}

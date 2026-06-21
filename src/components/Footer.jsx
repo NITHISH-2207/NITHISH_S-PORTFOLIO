@@ -1,4 +1,3 @@
-import React from 'react';
 import { FiGithub, FiLinkedin, FiCompass } from 'react-icons/fi';
 import { SiLeetcode } from 'react-icons/si';
 
