@@ -53,14 +53,14 @@ export default function Hero() {
   }, [prefersReducedMotion]);
 
   const scrollToProjects = () => {
-  const el = document.getElementById('projects');
-  if (el) {
-    const offset = 80;
-    const elementPosition = el.getBoundingClientRect().top;
-    const offsetPosition = elementPosition + window.pageYOffset - offset;
-    window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
-  }
-};
+    const el = document.getElementById('projects');
+    if (el) {
+      const offset = 80;
+      const elementPosition = el.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - offset;
+      window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+    }
+  };
 
   return (
     <section
@@ -141,7 +141,7 @@ export default function Hero() {
             className="mt-4"
           >
             <p className="text-sm text-luxury-textSec font-medium">
-              340+ Problems Solved • 8.39 CGPA • 2nd Place Project Expo • 3+ Hackathons
+              400+ Problems Solved • 8.39 CGPA • 2nd Place Project Expo • 3+ Hackathons
             </p>
           </motion.div>
 
