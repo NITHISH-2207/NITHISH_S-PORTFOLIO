@@ -48,7 +48,7 @@ export default function Contact() {
 
   const handleSend = (e) => {
     e.preventDefault();
-    
+
     // Reset status and errors
     setStatus('idle');
     const newErrors = { name: '', email: '', message: '' };
@@ -92,16 +92,16 @@ export default function Contact() {
       },
       process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || ''
     )
-    .then(() => {
-      setStatus('success');
-      setFormState({ name: '', email: '', message: '' });
-      // Clear success state after 5 seconds to allow sending another message
-      setTimeout(() => setStatus('idle'), 5000);
-    })
-    .catch((err) => {
-      console.error('EmailJS Send Error:', err);
-      setStatus('error');
-    });
+      .then(() => {
+        setStatus('success');
+        setFormState({ name: '', email: '', message: '' });
+        // Clear success state after 5 seconds to allow sending another message
+        setTimeout(() => setStatus('idle'), 5000);
+      })
+      .catch((err) => {
+        console.error('EmailJS Send Error:', err);
+        setStatus('error');
+      });
   };
 
   return (
