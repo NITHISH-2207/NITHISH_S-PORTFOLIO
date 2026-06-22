@@ -202,12 +202,12 @@ export default function Contact() {
               {/* Name */}
               <div className="space-y-1.5 text-left">
                 <label className="text-[9px] font-mono tracking-wider uppercase text-luxury-textSec">
-                  Your Identifier Name
+                  Name
                 </label>
                 <input
                   type="text"
                   required
-                  placeholder="e.g. Recruit Agent"
+                  placeholder="e.g. NITHISH"
                   value={formState.name}
                   onChange={(e) => setFormState({ ...formState, name: e.target.value })}
                   className="w-full px-4 py-3 rounded-lg bg-luxury-bg border border-luxury-border text-xs text-luxury-textPri focus:outline-none focus:border-luxury-navy/40 transition-colors font-medium placeholder-luxury-textSec/30"
@@ -220,12 +220,12 @@ export default function Contact() {
               {/* Email */}
               <div className="space-y-1.5 text-left">
                 <label className="text-[9px] font-mono tracking-wider uppercase text-luxury-textSec">
-                  Your Target Email
+                  Email
                 </label>
                 <input
                   type="email"
                   required
-                  placeholder="e.g. agent@corporation.com"
+                  placeholder="e.g. email@corporation.com"
                   value={formState.email}
                   onChange={(e) => setFormState({ ...formState, email: e.target.value })}
                   className="w-full px-4 py-3 rounded-lg bg-luxury-bg border border-luxury-border text-xs text-luxury-textPri focus:outline-none focus:border-luxury-navy/40 transition-colors font-medium placeholder-luxury-textSec/30"
@@ -238,7 +238,7 @@ export default function Contact() {
               {/* Message */}
               <div className="space-y-1.5 text-left">
                 <label className="text-[9px] font-mono tracking-wider uppercase text-luxury-textSec">
-                  Transmitted Payload (Message)
+                  Message
                 </label>
                 <textarea
                   required
