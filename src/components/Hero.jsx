@@ -141,7 +141,7 @@ export default function Hero() {
             className="mt-4"
           >
             <p className="text-sm text-luxury-textSec font-medium">
-              400+ Problems Solved • 8.39 CGPA • 2nd Place Project Expo • 3+ Hackathons
+              400+ Problems Solved • 8.41 CGPA • 2nd Place Project Expo • 3+ Hackathons
             </p>
           </motion.div>
 
